@@ -1,0 +1,43 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+import com.chris.commons.result.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+	
+	@Autowired
+	${table.mapperName} ${table.entityPath}Mapper;
+	
+	
+	@Override
+    public void selectDataGrid(PageInfo pageInfo) {
+        Page<${entity}> page = new Page<${entity}>(pageInfo.getNowpage(), pageInfo.getSize());
+        
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>();
+        queryWrapper.orderBy(true, pageInfo.getOrder().equalsIgnoreCase("ASC"), pageInfo.getSort());
+        
+        ${table.entityPath}Mapper.selectPage(page, queryWrapper);
+        pageInfo.setRows(page.getRecords());
+        pageInfo.setTotal(page.getTotal());
+    }	
+	
+
+
+}

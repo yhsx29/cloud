@@ -1,0 +1,23 @@
+package util;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ${entity}Util {
+	
+	
+	//参与查询的属性和对应的数据库字段
+	public static Map<String, String> getMap() {
+		Map<String, String> map = new HashMap<String, String>();
+#foreach($field in ${table.fields})
+		map.put("${field.propertyName}", "${field.name}");
+#end
+		return map;
+	}
+	
+	//不参加查询属性 notMap
+	public static Map<String, String> getNotMap() {
+		Map<String, String> map = new HashMap<String, String>();
+		return map;
+	}
+}
