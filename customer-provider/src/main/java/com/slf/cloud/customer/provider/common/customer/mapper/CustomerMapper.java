@@ -1,7 +1,7 @@
 package com.slf.cloud.customer.provider.common.customer.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.slf.cloud.customer.provider.model.Customer;
+import com.slf.cloud.parent.base.mapper.IBaseMapper;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.slf.cloud.customer.provider.model.Customer;
  * @author slf
  * @since 2020-04-09
  */
-public interface CustomerMapper extends BaseMapper<Customer> {
+public interface CustomerMapper extends IBaseMapper<Customer> {
 
 }

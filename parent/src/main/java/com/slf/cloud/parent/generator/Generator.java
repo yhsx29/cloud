@@ -1,28 +1,21 @@
-package com.golden.bdp.wcwl.generator;
+package com.slf.cloud.parent.generator;
+
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableFill;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.slf.cloud.parent.base.controller.BaseController;
+import com.slf.cloud.parent.base.mapper.IBaseMapper;
+import com.slf.cloud.parent.base.service.BaseService;
+import com.slf.cloud.parent.base.service.impl.BaseServiceImpl;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-import com.baomidou.mybatisplus.generator.config.converts.OracleTypeConvert;
-import com.baomidou.mybatisplus.generator.config.po.TableFill;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.golden.bdp.wcwl.core.action.BaseBdpAction;
-import com.golden.bdp.wcwl.core.mapper.BaseBdpMapper;
-import com.golden.bdp.wcwl.core.service.BaseBdpService;
-import com.golden.bdp.wcwl.core.service.IBaseBdpService;
 
 public class Generator {
 	public static void main(String[] args) {
@@ -32,7 +25,7 @@ public class Generator {
 		String outputDir = "D://generator";
 //		String[] tablePrefixArray={"T_" };
 //		String[] tableIncludeArray={ "BASIC_AREA","BASIC_DEPT","BASIC_EMPLOYEE","BASIC_MEMBER","BASIC_ORG","CONFIG_BUTTON","CONFIG_DATAPER","CONFIG_PERMISSION","SYSTEM_DATAPER","SYSTEM_OPERATOR","SYSTEM_OP_DATAPER","SYSTEM_OP_PERMISSION","SYSTEM_RO_DATAPER","SYSTEM_ROLE","SYSTEM_RO_PERMISSION","SYSTEM_SETTING","SYS_TIME","V_BUTPERMISSION_ALLOT","V_BUTPERMISSION_ALLOT_DETAIL","V_DATAPER","V_PERMISSION_ALLOT","V_PERMISSION_ALLOT_DATA","V_PERMISSION_ALLOT_DETAIL"};
-		String table="System_Billcode".toUpperCase();
+		String table="customer".toUpperCase();
 		String[] tableIncludeArray={table };
 		final String viewOutputDir = outputDir;
 		
@@ -56,55 +49,55 @@ public class Generator {
 		gc.setControllerName("%sController");	//?Controller.java文件命名
         mpg.setGlobalConfig(gc);
         Generator gen = new Generator();
-        Generator.DIYproperties DIY = gen.new DIYproperties();
+        DIYproperties DIY = gen.new DIYproperties();
         DIY.setFacadeName("systemPrintlog"+"Facade");//?facade.java文件命名
         DIY.setFacadeImplName("systemPrintlog"+"FacadeImpl");//?facadeImpl.java文件命名
         
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setDbType(DbType.ORACLE);
-        dsc.setTypeConvert(new OracleTypeConvert() {
-        	  @Override
-              public DbColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
-                  System.out.println("转换类型：" + fieldType);
-                  // 注意！！processTypeConvert 存在默认类型转换，如果不是你要的效果请自定义返回、非如下直接返回。
-                  String t = fieldType.toUpperCase();
-                  if (t.contains("CHAR")) {
-                      return DbColumnType.STRING;
-                  } else if (t.contains("DATE") || t.contains("TIMESTAMP")) {
-                      return DbColumnType.DATE;
-                  } else if (t.contains("NUMBER")) {
-                      if (t.matches("NUMBER\\(+\\d\\)")) {
-                          return DbColumnType.INTEGER;
-                      } else if (t.matches("NUMBER\\(+\\d{2}+\\)")) {
-                          return DbColumnType.LONG;
-                      } else if (t.equals("NUMBER")) {
-                          return DbColumnType.LONG;
-                      }
-                      
-                      return DbColumnType.DOUBLE;
-                  } else if (t.contains("FLOAT")) {
-                      return DbColumnType.FLOAT;
-                  } else if (t.contains("clob")) {
-                      return DbColumnType.CLOB;
-                  } else if (t.contains("BLOB")) {
-                      return DbColumnType.OBJECT;
-                  } else if (t.contains("binary")) {
-                      return DbColumnType.BYTE_ARRAY;
-                  } else if (t.contains("RAW")) {
-                      return DbColumnType.BYTE_ARRAY;
-                  }else if (t.toUpperCase().contains("SMALLINT")) {
-                      return DbColumnType.INTEGER;
-                  }
-                  return DbColumnType.STRING;
-                  
-//	                  return super.processTypeConvert(fieldType);
-              }        	
-        });
-        dsc.setDriverName("oracle.jdbc.driver.OracleDriver");
-        dsc.setUrl("jdbc:oracle:thin:@192.168.2.92:1521:orcl");
-        dsc.setUsername("zjwcn");
-        dsc.setPassword("zjwcn");
+        dsc.setDbType(DbType.MYSQL);
+//        dsc.setTypeConvert(new OracleTypeConvert() {
+//        	  @Override
+//              public DbColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
+//                  System.out.println("转换类型：" + fieldType);
+//                  // 注意！！processTypeConvert 存在默认类型转换，如果不是你要的效果请自定义返回、非如下直接返回。
+//                  String t = fieldType.toUpperCase();
+//                  if (t.contains("CHAR")) {
+//                      return DbColumnType.STRING;
+//                  } else if (t.contains("DATE") || t.contains("TIMESTAMP")) {
+//                      return DbColumnType.DATE;
+//                  } else if (t.contains("NUMBER")) {
+//                      if (t.matches("NUMBER\\(+\\d\\)")) {
+//                          return DbColumnType.INTEGER;
+//                      } else if (t.matches("NUMBER\\(+\\d{2}+\\)")) {
+//                          return DbColumnType.LONG;
+//                      } else if (t.equals("NUMBER")) {
+//                          return DbColumnType.LONG;
+//                      }
+//
+//                      return DbColumnType.DOUBLE;
+//                  } else if (t.contains("FLOAT")) {
+//                      return DbColumnType.FLOAT;
+//                  } else if (t.contains("clob")) {
+//                      return DbColumnType.CLOB;
+//                  } else if (t.contains("BLOB")) {
+//                      return DbColumnType.OBJECT;
+//                  } else if (t.contains("binary")) {
+//                      return DbColumnType.BYTE_ARRAY;
+//                  } else if (t.contains("RAW")) {
+//                      return DbColumnType.BYTE_ARRAY;
+//                  }else if (t.toUpperCase().contains("SMALLINT")) {
+//                      return DbColumnType.INTEGER;
+//                  }
+//                  return DbColumnType.STRING;
+//
+////	                  return super.processTypeConvert(fieldType);
+//              }
+//        });
+        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+        dsc.setUrl("jdbc:mysql://localhost:3306/cloud?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        dsc.setUsername("root");
+        dsc.setPassword("root");
         mpg.setDataSource(dsc);
         
         // 策略配置
@@ -116,24 +109,24 @@ public class Generator {
         
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
-        strategy.setSuperControllerClass(BaseBdpAction.class);
-        strategy.setSuperMapperClass(BaseBdpMapper.class.getName());
-        strategy.setSuperServiceImplClass(BaseBdpService.class.getName());
-        strategy.setSuperServiceClass(IBaseBdpService.class.getName());
+        strategy.setSuperControllerClass(BaseController.class);
+        strategy.setSuperMapperClass(IBaseMapper.class.getName());
+        strategy.setSuperServiceImplClass(BaseServiceImpl.class.getName());
+        strategy.setSuperServiceClass(BaseService.class.getName());
         // 自定义实体，公共字段
         strategy.setLogicDeleteFieldName("DELETE_FLAG");
         strategy.setVersionFieldName("DATA_VERSION");
         List<TableFill> tableFillList=new ArrayList<TableFill>();
-        tableFillList.add(new TableFill("OPERATOR_CODE",FieldFill.INSERT));
-        tableFillList.add(new TableFill("DATA_SYSTEMDATE",FieldFill.INSERT));
-        tableFillList.add(new TableFill("MODIFY_OPERATOR",FieldFill.INSERT_UPDATE));
-        tableFillList.add(new TableFill("MODIFY_TIME",FieldFill.INSERT_UPDATE));
+//        tableFillList.add(new TableFill("OPERATOR_CODE",FieldFill.INSERT));
+//        tableFillList.add(new TableFill("DATA_SYSTEMDATE",FieldFill.INSERT));
+//        tableFillList.add(new TableFill("MODIFY_OPERATOR",FieldFill.INSERT_UPDATE));
+//        tableFillList.add(new TableFill("MODIFY_TIME",FieldFill.INSERT_UPDATE));
         strategy.setTableFillList(tableFillList);
         
         mpg.setStrategy(strategy);
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.golden.ldp.wcwl.portal");
+        pc.setParent("com.slf.cloud.common");
         
         pc.setEntity("model");
         pc.setMapper("dao");

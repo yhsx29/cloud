@@ -1,9 +1,9 @@
-package com.slf.cloud.common.controller;
+package com.slf.cloud.customer.provider.common.customer.controller;
 
-import javax.validation.Valid;
-
-import java.util.List;
-import java.util.Date;
+import com.slf.cloud.customer.provider.common.customer.service.CustomerService;
+import com.slf.cloud.customer.provider.model.Customer;
+import com.slf.cloud.parent.base.controller.BaseController;
+import com.slf.cloud.parent.base.page.BasePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.chris.commons.result.PageInfo;
-import com.slf.cloud.common.model.Customer;
-import com.slf.cloud.common.service.CustomerService;
-import com.slf.cloud.parent.base.controller.BaseController;
+
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -27,7 +25,6 @@ import com.slf.cloud.parent.base.controller.BaseController;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController extends BaseController {
-
     @Autowired private CustomerService customerService;
     
     @GetMapping("/manager")
@@ -37,10 +34,10 @@ public class CustomerController extends BaseController {
     
     @PostMapping("/dataGrid")
     @ResponseBody
-    public PageInfo dataGrid(Customer customer, Integer page, Integer rows, String sort,String order) {
-        PageInfo pageInfo = new PageInfo(page, rows, sort, order);
-        customerService.selectDataGrid(pageInfo);
-        return pageInfo;
+    public BasePage dataGrid(Customer customer, Integer page, Integer rows, String sort, String order) {
+        BasePage basePage = new BasePage();
+        customerService.page(basePage);
+        return basePage;
     }
     
     /**
@@ -60,12 +57,8 @@ public class CustomerController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public Object add(@Valid Customer customer) {
-        boolean b = customerService.save(customer);
-        if (b) {
-            return renderSuccess("添加成功！");
-        } else {
-            return renderError("添加失败！");
-        }
+
+        return "add";
     }
     
     /**
@@ -76,12 +69,7 @@ public class CustomerController extends BaseController {
     @PostMapping("/delete")
     @ResponseBody
     public Object delete(Long id) {
-        boolean b = customerService.removeById(id);
-        if (b) {
-            return renderSuccess("删除成功！");
-        } else {
-            return renderError("删除失败！");
-        }
+        return "delete";
     }
     
     /**
@@ -92,7 +80,7 @@ public class CustomerController extends BaseController {
      */
     @GetMapping("/editPage")
     public String editPage(Model model, Long id) {
-        Customer customer = customerService.getById(id);
+        Customer customer = (Customer) customerService.getById(id);
         model.addAttribute("customer", customer);
         return "base/customer/customerEdit";
     }
@@ -105,11 +93,6 @@ public class CustomerController extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public Object edit(@Valid Customer customer) {
-        boolean b = customerService.updateById(customer);
-        if (b) {
-            return renderSuccess("编辑成功！");
-        } else {
-            return renderError("编辑失败！");
-        }
+        return "edit";
     }
 }

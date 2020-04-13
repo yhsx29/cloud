@@ -1,4 +1,4 @@
-package com.slf.cloud.common.model;
+package com.slf.cloud.customer.provider.model;
 
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;

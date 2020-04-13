@@ -1,4 +1,4 @@
-package util;
+package com.slf.cloud.customer.provider.common.customer;
 
 import java.util.HashMap;
 import java.util.Map;
