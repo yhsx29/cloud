@@ -15,7 +15,11 @@
     <description>项目父类文件</description>
 
     <properties>
-        <java.version>1.28</java.version>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+        <mybatis-plus.version>3.3.1</mybatis-plus.version>
+        <mybatis.verion>2.1.2</mybatis.verion>
+        <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
     </properties>
 
     <dependencies>
