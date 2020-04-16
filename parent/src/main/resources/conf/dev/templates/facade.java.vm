@@ -1,0 +1,15 @@
+package ${package.Facade};
+
+import ${package.Entity}.${entity};
+import com.chris.commons.result.PageInfo;
+/**
+ * <p>
+ * $!{table.comment} 应用层
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+public interface ${diy.facadeName}{
+	 
+}

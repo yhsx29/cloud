@@ -1,0 +1,19 @@
+package ${package.FacadeImpl};
+
+import ${package.Entity}.${entity};
+import org.springframework.stereotype.Component;
+
+/**
+ * <p>
+ * $!{table.comment} 应用层实现
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Component
+public class ${diy.facadeImplName} extends BaseSuperFacade implements ${diy.facadeName} {
+	
+
+
+}
