@@ -21,7 +21,7 @@
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
         <spring-cloud-services.version>2.2.3.RELEASE</spring-cloud-services.version>
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
-        <vaadin.version>14.1.23</vaadin.version>
+        <vaadin.version>14.6.2</vaadin.version>
     </properties>
 
     <dependencyManagement>
